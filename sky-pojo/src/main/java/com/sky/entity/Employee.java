@@ -42,4 +42,7 @@ public class Employee implements Serializable {
 
     private Long updateUser;
 
+    public void getUpdateUser(Long currentId) {
+        this.updateUser = currentId;
+    }
 }
