@@ -27,7 +27,8 @@ public class AliOssUtil {
      * @return
      */
     public String upload(byte[] bytes, String objectName) {
-
+        System.out.println("我是sout， 上传");
+        System.out.println(accessKeyId + accessKeySecret);
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 

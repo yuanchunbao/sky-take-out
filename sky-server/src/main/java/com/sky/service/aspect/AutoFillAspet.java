@@ -41,7 +41,7 @@ public class AutoFillAspet {
 
 
         //获取当前的实体对象
-        Object entity = (Employee) joinPoint.getArgs()[0];
+        Object entity = joinPoint.getArgs()[0];
         if(entity == null)
             return;
 
@@ -58,7 +58,7 @@ public class AutoFillAspet {
                 Method setUpdateTime = entity.getClass().getDeclaredMethod("setUpdateTime", LocalDateTime.class);
                 Method setUpdateUser = entity.getClass().getDeclaredMethod("setUpdateUser", Long.class);
 
-                setCreateUser.invoke(entity, now);
+                setCreateTime.invoke(entity, now);
                 setCreateUser.invoke(entity, id);
                 setUpdateTime.invoke(entity,now);
                 setUpdateUser.invoke(entity, id);
