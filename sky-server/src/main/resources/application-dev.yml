@@ -11,3 +11,8 @@ sky:
     access-key-id: LTAI5tGbiwn2E5bzMmQBT5QS
     access-key-secret: 5ywCWb1ih4y3uJqNWcOSqjMhT8pnN9
     bucket-name: yuancb
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
