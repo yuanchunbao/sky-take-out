@@ -25,11 +25,19 @@ public interface SetmealMapper {
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
 
-    @Select("select * from setmeal where category_id = #{categoryId}")
+    //@Select("select * from setmeal where category_id = #{categoryId}")
     List<Setmeal> list(Setmeal setmeal);
 
 
-    List<DishItemVO> getDishItemBySetmealId(Long id);
+    /**
+     * 根据套餐id查询菜品选项
+     * @param setmealId
+     * @return
+     */
+    @Select("select sd.name, sd.copies, d.image, d.description " +
+            "from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
+            "where sd.setmeal_id = #{setmealId}")
+    List<DishItemVO> getDishItemBySetmealId(Long setmealId);
 
     void update(Setmeal setmeal);
 
