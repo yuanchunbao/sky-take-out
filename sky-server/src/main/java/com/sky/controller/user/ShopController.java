@@ -25,14 +25,14 @@ public class ShopController {
     @ApiOperation("获取店铺营业状态")
     private Result<Integer> getStatus(){
         log.info("获取店铺的营业状态");
-        Integer ststus = (Integer) redisTemplate.opsForValue().get("SHOP_STATUS");
-        if(ststus == 1){
+        Integer status = (Integer) redisTemplate.opsForValue().get("SHOP_STATUS");
+        if(status == 1){
             log.info("营业中");
         }
         else{
             log.info("打样");
         }
-        return Result.success(ststus);
+        return Result.success(status);
         
     }
     

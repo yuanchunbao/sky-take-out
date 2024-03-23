@@ -43,19 +43,41 @@
     <update id="updateById" >
         update dish
         <set>
-            <if test="name != null"> name = #{name},</if>
-            <if test="categoryId != null"> category_id = #{categoryId},</if>
-            <if test="price != null"> price = #{price},</if>
-            <if test="image != null"> image = #{image},</if>
-            <if test="status != null"> status = #{status},</if>
-            <if test="createTime != null"> create_time = #{createTime},</if>
-            <if test="updateTime != null"> update_time = #{updateTime},</if>
-            <if test="createUser != null"> create_user = #{createUser},</if>
-            <if test="updateUser != null"> update_user= #{updateUser},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="updateUser != null">update_user= #{updateUser},</if>
             <if test="description != null"> description= #{description},</if>
         </set>
         where id = #{id}
     </update>
+
+    <select id="list" resultType="com.sky.entity.Dish" >
+        select * from dish
+        <where>
+            <if test="name != null"> name = #{name}</if>
+            <if test="categoryId != null"> category_id = #{categoryId}</if>
+            <if test="price != null"> price = #{price}</if>
+            <if test="image != null"> image = #{image}</if>
+            <if test="createTime != null"> create_time = #{createTime}</if>
+            <if test="updateTime != null"> update_time = #{updateTime}</if>
+            <if test="createUser != null"> create_user = #{createUser}</if>
+            <if test="updateUser != null"> update_user= #{updateUser}</if>
+            <if test="description != null"> description= #{description}</if>
+        </where>
+
+    </select>
+
+
+
+
+
+
 
 
 </mapper>

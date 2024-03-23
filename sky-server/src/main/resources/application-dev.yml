@@ -11,6 +11,10 @@ sky:
     access-key-id: LTAI5tGbiwn2E5bzMmQBT5QS
     access-key-secret: 5ywCWb1ih4y3uJqNWcOSqjMhT8pnN9
     bucket-name: yuancb
+  wechat:
+    appid: wx4d7bf3880de238e6
+    secret: 680a7dc6d9ba6bde6ca430f4b2617cad
+
 spring:
   redis:
     host: localhost
