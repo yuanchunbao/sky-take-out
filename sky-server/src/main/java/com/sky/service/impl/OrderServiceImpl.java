@@ -11,9 +11,11 @@ import com.sky.exception.OrderBusinessException;
 import com.sky.exception.ShoppingCartBusinessException;
 import com.sky.mapper.*;
 import com.sky.service.OrderService;
+import com.sky.service.ShoppingCartService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -48,6 +51,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
     /**
      * 用户下单
      * @param ordersSubmitDTO
@@ -59,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
         //处理业务异常
             //地址薄为空
             //购物车为空
+        log.info("调用sub");
         AddressBook byId = addressBookMapper.getById(ordersSubmitDTO.getAddressBookId());
         if(byId == null){
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
@@ -76,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(ordersSubmitDTO, orders);
         orders.setOrderTime(LocalDateTime.now());
         orders.setPayStatus(Orders.UN_PAID);
-        orders.setStatus(Orders.TO_BE_CONFIRMED);
+        orders.setStatus(Orders.PENDING_PAYMENT);
         orders.setNumber(String.valueOf(System.currentTimeMillis()));
         orders.setPhone(byId.getPhone());
         orders.setConsignee(byId.getConsignee());
@@ -147,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
         OrderPaymentVO vo = jo.toJavaObject(OrderPaymentVO.class);
         vo.setPackageStr(jo.getString("package"));
         orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
+        shoppingCartService.cleanShoppingCart();
         return vo;
     }
 
@@ -167,6 +175,8 @@ public class OrderServiceImpl implements OrderService {
                 .payStatus(Orders.PAID)
                 .checkoutTime(LocalDateTime.now())
                 .build();
+        System.out.println("交易完成");
+        System.out.println(orders);
 
         orderMapper.update(orders);
     }
